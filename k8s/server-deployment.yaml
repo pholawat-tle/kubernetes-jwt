@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  selector:
+    matchLabels:
+      component: api
+  template:
+    metadata:
+      labels:
+        component: api
+    spec:
+      containers:
+      - name: server
+        image: pholawat5/jwt-api
+        ports:
+        - containerPort: 5000
+        env:
+          - name: PORT
+            value: '5000'

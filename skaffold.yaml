@@ -1,0 +1,19 @@
+  
+apiVersion: skaffold/v1beta12
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+    - image: pholawat5/jwt-api
+      context: api
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: '*'
+            dest: .
+deploy:
+  kubectl:
+    manifests:
+      - 'k8s/*'
