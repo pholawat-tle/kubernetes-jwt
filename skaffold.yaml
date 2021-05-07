@@ -16,5 +16,6 @@ build:
 deploy:
   kubectl:
     manifests:
+      - 'db-secrets.yaml'
       - 'jwt-secrets.yaml'
       - 'k8s/*'

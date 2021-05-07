@@ -29,3 +29,23 @@ spec:
               secretKeyRef:
                   name: jwt-secrets
                   key: REFRESH_TOKEN_SECRET
+          - name: DBHOST
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: DBHOST
+          - name: DBUSER
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: DBUSER
+          - name: DBPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: DBPASSWORD
+          - name: DBNAME
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: DBNAME
