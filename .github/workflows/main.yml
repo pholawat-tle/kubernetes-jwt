@@ -7,9 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,3 +18,19 @@ jobs:
     
     - name: Test the Docker image
       run: docker run pholawat5/jwt-api npm run test
+
+  push:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Build the Docker image
+      run: docker build -f ./api/Dockerfile -t pholawat5/jwt-api ./api
+    
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{secrets.DOCKER_USERNAME}}" --password-stdin
+      
+    - name: Push the Image to Docker Hub
+      run: docker push pholawat5/jwt-api
