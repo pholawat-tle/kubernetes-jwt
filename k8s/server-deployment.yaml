@@ -19,3 +19,13 @@ spec:
         env:
           - name: PORT
             value: '5000'
+          - name: ACCESS_TOKEN_SECRET
+            valueFrom:
+              secretKeyRef:
+                  name: jwt-secrets
+                  key: ACCESS_TOKEN_SECRET
+          - name: REFRESH_TOKEN_SECRET
+            valueFrom:
+              secretKeyRef:
+                  name: jwt-secrets
+                  key: REFRESH_TOKEN_SECRET
