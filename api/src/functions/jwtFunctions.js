@@ -1,5 +1,6 @@
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = require('../config');
 const jwt = require('jsonwebtoken');
+const { TokenExpiredError } = require('jsonwebtoken');
 
 let refreshTokens = [];
 
@@ -20,12 +21,13 @@ module.exports = {
             req.headers['authorization'].split().length &&
             req.headers['authorization'].split(' ')[1];
         if (token == null) {
-            return res.status(401).send();
+            return res.status(403).send();
         }
 
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
-            console.log(err);
-            if (err) return res.sendStatus(403);
+            if (err instanceof TokenExpiredError) {
+                return res.sendStatus(401);
+            } else if (err) return res.sendStatus(403);
             req.user = user;
             next();
         });
